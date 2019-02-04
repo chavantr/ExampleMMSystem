@@ -15,8 +15,8 @@ class MessDetailsActivty : AppCompatActivity() {
         var values: List<String>
         try {
             values = intent.extras.getString("id").split("#")
-            lblName.text = values[0]
-            lblLocalarea.text = values[1]
+            lblName.text = "Name : " + values[0]
+            lblLocalarea.text = "Address : " + values[1]
             lblRating.text = "Rating : ${values[2]}"
             lblFoodType.text = "Food Type : " + generateFoodType(values[3])
             lblMessType.text = "Mess Type : " + generateMessType(values[4])
@@ -33,14 +33,12 @@ class MessDetailsActivty : AppCompatActivity() {
     }
 
     private fun generateMessType(id: String): String {
-
         return when (id) {
             "3", "4" -> "Mix"
             "1" -> "Veg"
             "2" -> "Non Veg"
             else -> "Mix"
         }
-
     }
 
     private fun generateFoodType(id: String): String {
@@ -50,6 +48,5 @@ class MessDetailsActivty : AppCompatActivity() {
             "2" -> "Mess Only"
             else -> "Mix"
         }
-
     }
 }
