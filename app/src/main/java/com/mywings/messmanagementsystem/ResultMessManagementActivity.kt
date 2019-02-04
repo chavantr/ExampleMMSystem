@@ -2,6 +2,7 @@ package com.mywings.messmanagementsystem
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -23,7 +24,10 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.mywings.messmanagementsystem.binder.MessAdapter
+import com.mywings.messmanagementsystem.model.Mess
+import com.mywings.messmanagementsystem.model.UserHolder
 import kotlinx.android.synthetic.main.activity_result_mess_management.*
+import kotlinx.android.synthetic.main.layout_mess_row.view.*
 
 class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -38,6 +42,8 @@ class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, Go
     private var latLng: LatLng = LatLng(18.515665, 73.924090)
     private var locationManager: LocationManager? = null
     private lateinit var cPosition: Marker
+    private lateinit var messes: List<Mess>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +59,8 @@ class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, Go
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onMapReady(googleMap: GoogleMap?) {
 
+
+        this.messes = UserHolder.getInstance().messes
 
         mMap = googleMap
         if (ActivityCompat.checkSelfPermission(
@@ -111,7 +119,9 @@ class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, Go
                 .strokeColor(strokeColor)
                 .strokeWidth(2f)
         )
+
         mMap!!.addMarker(MarkerOptions().position(latLng))
+
         val cameraPos = CameraPosition.Builder().tilt(60f).target(latLng).zoom(20f).build()
         mMap!!.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPos), 1000, null)
 
@@ -120,21 +130,33 @@ class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, Go
         mMap!!.setOnInfoWindowClickListener(infoClick)
 
 
+        if (null != messes && messes.isNotEmpty())
+            for (i in messes.indices) {
+                val mess = messes.get(i)
+                val ltLg = LatLng(mess.latitude.toDouble(), mess.longitude.toDouble())
+                mMap!!.addMarker(MarkerOptions().position(ltLg)).snippet =
+                    "${mess.name}#${mess.localArea}#${mess.rating}#${mess.foodType}#${mess.messType}"
+            }
     }
 
-
     private val infoWindowAdapter = object : GoogleMap.InfoWindowAdapter {
-
         override fun getInfoContents(marker: Marker?): View? {
             var view: View? = null
             var values: List<String>
             try {
                 view = layoutInflater.inflate(R.layout.layout_mess_row, null)
                 values = marker!!.snippet.toString().split("#")
-                // view!!.lblInfo.text =
-                //     "Bus Name : ${values[0]}\nDriver Name : ${values[1]}\nDriver Phone : ${values[2]}"
+                view!!.lblName.text = values[0]
+                view!!.lblLocalarea.text = values[1]
+                view!!.lblRating.text = "Rating : ${values[2]}"
+                view!!.lblFoodType.text = "Food Type : " + generateFoodType(values[3])
+                view!!.lblMessType.text = "Mess Type : " + generateMessType(values[4])
+                view!!.lblLocalarea.visibility = View.VISIBLE
+                view!!.lblRating.visibility = View.VISIBLE
+                view!!.lblFoodType.visibility = View.VISIBLE
+                view!!.lblMessType.visibility = View.VISIBLE
             } catch (e: Exception) {
-                //view!!.lblInfo.text = "Your Location"
+                view!!.lblName.text = "Your location"
             }
             return view;
         }
@@ -145,11 +167,33 @@ class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, Go
 
     }
 
+    private fun generateMessType(id: String): String {
+
+        return when (id) {
+            "3", "4" -> "Mix"
+            "1" -> "Veg"
+            "2" -> "Non Veg"
+            else -> "Mix"
+        }
+
+    }
+
+    private fun generateFoodType(id: String): String {
+        return when (id) {
+            "3", "4" -> "Mix"
+            "1" -> "Home Delivery"
+            "2" -> "Mess Only"
+            else -> "Mix"
+        }
+
+    }
+
     private val infoClick = GoogleMap.OnInfoWindowClickListener {
         try {
-            val value = it.snippet.toString().split("#")[3]
-            //getRoute(value.trim().toInt())
-            //progressDialog.show()
+            //val value = it.snippet.toString().split("#")[3]
+            val intent = Intent(this@ResultMessManagementActivity, MessDetailsActivty::class.java)
+            intent.putExtra("id", it.snippet)
+            startActivity(intent)
         } catch (e: Exception) {
         }
     }

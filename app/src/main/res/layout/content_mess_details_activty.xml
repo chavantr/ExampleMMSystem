@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_mess_details_activty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MessDetailsActivty">
+
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:padding="12dp"
+            android:layout_height="wrap_content" android:layout_margin="7dp">
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="24sp"
+                  android:id="@+id/lblName"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="24sp"
+                  android:id="@+id/lblLocalarea"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="24sp"
+                  android:id="@+id/lblFoodType" android:visibility="gone"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="24sp"
+                  android:id="@+id/lblMessType"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="24sp"
+                  android:id="@+id/lblRating"/>
+
+
+        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/btnRate"
+                android:text="@string/rate_mess"/>
+
+        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/btnSubscribe"
+                android:text="@string/subscribe"/>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

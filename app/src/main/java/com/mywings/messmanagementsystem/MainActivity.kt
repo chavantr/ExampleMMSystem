@@ -25,6 +25,10 @@ class MainActivity : AppCompatActivity(), OnLoginListener {
             startActivity(intent)
         }
         btnLogin.setOnClickListener {
+
+            txtUserName.setText("xyz")
+            txtPassword.setText("xyz")
+
             if (txtUserName.text!!.isNotEmpty() && txtPassword.text!!.isNotEmpty()) {
                 initLogin()
             } else {
@@ -60,4 +64,6 @@ class MainActivity : AppCompatActivity(), OnLoginListener {
             Toast.makeText(this@MainActivity, "Something went wrong, try again", Toast.LENGTH_LONG).show()
         }
     }
+
+
 }

@@ -31,4 +31,10 @@
     <string name="mix">Mix</string>
     <string name="mess_only">Mess only</string>
     <string name="home_delivery">Home delivery</string>
+    <string name="title_activity_mess_details_activty">About Mess</string>
+
+    <string name="rate_mess">Rate Mess</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="rate">Rate</string>
+    <string name="enter_comment">Enter comment</string>
 </resources>
