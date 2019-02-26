@@ -71,7 +71,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_profile -> {
-                val intent = Intent(this@DashboardActivity, UpdateProfileActivity::class.java)
+                val intent = Intent(this@DashboardActivity, ProfileActivity::class.java)
                 startActivity(intent)
                 drawer_layout.closeDrawer(GravityCompat.START)
                 return true
