@@ -23,7 +23,7 @@
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".MessDetailsActivty"
+                android:name=".MessDetailsActivity"
                 android:label="@string/title_activity_mess_details_activty"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar">

@@ -55,11 +55,15 @@ class MainActivity : AppCompatActivity(), OnLoginListener {
     }
 
     override fun onLoginSuccess(user: User) {
+
         progressDialogUtil.hide()
+
         if (null != user) {
             UserHolder.getInstance().user = user
+
             val intent = Intent(this@MainActivity, DashboardActivity::class.java)
             startActivity(intent)
+
         } else {
             Toast.makeText(this@MainActivity, "Something went wrong, try again", Toast.LENGTH_LONG).show()
         }

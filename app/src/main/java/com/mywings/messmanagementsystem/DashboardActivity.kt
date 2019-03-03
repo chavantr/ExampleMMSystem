@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.SeekBar
 import com.mywings.messmanagementsystem.model.Mess
 import com.mywings.messmanagementsystem.model.UserHolder
 import com.mywings.messmanagementsystem.process.GetMessAsync
@@ -40,11 +41,53 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         skDistance.incrementProgressBy(100)
         skPrice.incrementProgressBy(10)
 
+        skDistance.setOnSeekBarChangeListener(seekLe)
+
+        skPrice.setOnSeekBarChangeListener(seekLp)
+
         btnSearch.setOnClickListener {
             initGetMess()
         }
 
         progressDialogUtil = ProgressDialogUtil(this)
+
+    }
+
+    val seekLe = object : SeekBar.OnSeekBarChangeListener {
+
+        override fun onStartTrackingTouch(p0: SeekBar?) {
+
+        }
+
+        override fun onStopTrackingTouch(p0: SeekBar?) {
+
+        }
+
+        override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
+
+            lblL.text = "Distance $progress (meter)"
+
+
+        }
+
+    }
+
+    val seekLp = object : SeekBar.OnSeekBarChangeListener {
+
+        override fun onStartTrackingTouch(p0: SeekBar?) {
+
+        }
+
+        override fun onStopTrackingTouch(p0: SeekBar?) {
+
+        }
+
+        override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
+
+            lblPrie.text = "Price $progress (rupees)"
+
+
+        }
 
     }
 

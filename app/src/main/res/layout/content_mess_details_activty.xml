@@ -7,7 +7,7 @@
         tools:showIn="@layout/activity_mess_details_activty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MessDetailsActivty">
+        tools:context=".MessDetailsActivity">
 
 
     <LinearLayout
@@ -32,10 +32,10 @@
                   android:id="@+id/lblRating"/>
 
 
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/btnRate"
+        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/btnRateScreen"
                 android:text="@string/rate_mess"/>
 
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/btnSubscribe"
+        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/btnSubscribeEvent"
                 android:text="@string/subscribe"/>
 
     </LinearLayout>

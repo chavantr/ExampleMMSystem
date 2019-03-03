@@ -12,6 +12,8 @@ public class UserHolder {
 
     private List<Mess> messes;
 
+    private int id;
+
     public User getUser() {
         return user;
     }
@@ -26,6 +28,14 @@ public class UserHolder {
 
     public void setMesses(List<Mess> messes) {
         this.messes = messes;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 

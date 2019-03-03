@@ -3,25 +3,52 @@ package com.mywings.messmanagementsystem
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import kotlinx.android.synthetic.main.content_mess_details_activty.*
+import com.mywings.messmanagementsystem.model.UserHolder
+import com.mywings.messmanagementsystem.process.CommentAsync
+import com.mywings.messmanagementsystem.process.OnRateListener
+import com.mywings.messmanagementsystem.process.ProgressDialogUtil
+import kotlinx.android.synthetic.main.activity_rate.*
 
-class RateActivity : AppCompatActivity() {
+class RateActivity : AppCompatActivity(), OnRateListener {
+
+    private lateinit var progressDialogUtil: ProgressDialogUtil
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rate)
 
+        progressDialogUtil = ProgressDialogUtil(this)
+
         btnRate.setOnClickListener {
-            var snack = Snackbar.make(btnRate, "Rated successfully", Snackbar.LENGTH_INDEFINITE)
-            snack.setAction("OK") { finish() }
-            snack.show()
+
+            if (txtComment.text!!.isNotEmpty()) {
+                init()
+            }
+
         }
 
 
-        btnSubscribe.setOnClickListener {
-            var snack = Snackbar.make(btnRate, "Request completed", Snackbar.LENGTH_INDEFINITE)
-            snack.setAction("OK") { finish() }
-            snack.show()
-        }
+    }
 
+    private fun init() {
+        progressDialogUtil.show()
+        val commentAsync = CommentAsync()
+        commentAsync.setOnRateListener(
+            this,
+            "?id=${UserHolder.getInstance().id}&rate=${rate.rating}&${txtComment.text}"
+        )
+    }
+
+    override fun onFine(result: String?) {
+        progressDialogUtil.hide()
+        if (result.isNullOrBlank()) {
+            Snackbar.make(btnRate, "Something went wrong, Please try again.", Snackbar.LENGTH_LONG).show()
+        } else {
+            var event = Snackbar.make(btnRate, "Commented", Snackbar.LENGTH_INDEFINITE)
+            event.setAction("Ok") {
+                finish()
+            }
+            event.show()
+        }
     }
 }

@@ -7,4 +7,11 @@ object ConstantUtils {
     const val REGISTRATION = "MMS_Registration"
     const val GET_MESS = "MMS_GetMess"
     const val ESTA_CON = "EstablishConnection"
+    const val MMS_RATE = "MMS_Rate"
+
+    const val MMS_FORGOT_PASSWORD = "MMS_ForgotPassword"
+
+    const val MMS_LIKE = "MMS_Like"
+
+    const val UPDATE_PROFILE = "MMS_UpdateProfile"
 }
