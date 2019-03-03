@@ -53,7 +53,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     }
 
-    val seekLe = object : SeekBar.OnSeekBarChangeListener {
+    private val seekLe = object : SeekBar.OnSeekBarChangeListener {
 
         override fun onStartTrackingTouch(p0: SeekBar?) {
 
@@ -65,14 +65,14 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
 
-            lblL.text = "Distance $progress (meter)"
+            lblL.text = "Distance ${progress / 100} (km)"
 
 
         }
 
     }
 
-    val seekLp = object : SeekBar.OnSeekBarChangeListener {
+    private val seekLp = object : SeekBar.OnSeekBarChangeListener {
 
         override fun onStartTrackingTouch(p0: SeekBar?) {
 
