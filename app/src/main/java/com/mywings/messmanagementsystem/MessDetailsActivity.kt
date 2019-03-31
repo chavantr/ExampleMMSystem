@@ -34,14 +34,14 @@ class MessDetailsActivity : AppCompatActivity(), OnListListener {
                 val intent = Intent(this@MessDetailsActivity, RateActivity::class.java)
                 startActivity(intent)
             }
-
             btnSubscribeEvent.setOnClickListener {
                 init()
             }
-
-
+            btnMenu.setOnClickListener {
+                val intent = Intent(this@MessDetailsActivity, TodaysMenuActivity::class.java)
+                startActivity(intent)
+            }
         } catch (e: Exception) {
-
         }
     }
 
