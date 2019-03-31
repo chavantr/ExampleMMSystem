@@ -37,4 +37,6 @@
     <string name="subscribe">Subscribe</string>
     <string name="rate">Rate</string>
     <string name="enter_comment">Enter comment</string>
+    <string name="today_s_menu">Today\'s menu</string>
+    <string name="ok">Go back</string>
 </resources>

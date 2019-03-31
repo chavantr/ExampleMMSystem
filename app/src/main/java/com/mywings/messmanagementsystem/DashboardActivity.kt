@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SeekBar
+import com.mywings.messmanagementsystem.model.Criteria
 import com.mywings.messmanagementsystem.model.Mess
 import com.mywings.messmanagementsystem.model.UserHolder
 import com.mywings.messmanagementsystem.process.GetMessAsync
@@ -64,10 +65,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
 
         override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
-
-            lblL.text = "Distance ${progress / 100} (km)"
-
-
+            lblL.text = "Distance $progress (m)"
         }
 
     }
@@ -136,6 +134,11 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         jParam.put("MessType", getMessType())
         jParam.put("Price", skPrice.progress)
         jRequst.put("request", jParam)
+        var criteria = Criteria()
+        criteria.distance = skDistance.progress
+        criteria.foodType = getFoodType()
+        criteria.messType = getMessType()
+        UserHolder.getInstance().criteria = criteria
         getMessAsync.setOnMessListener(this, jRequst)
 
     }

@@ -12,9 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * @author Tatyabhau
- */
+
 public class DirectionsJSONParser {
 
     /**

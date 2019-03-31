@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="7dp"
+        tools:context=".TodaysMenuActivity">
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="15dp"
+              android:layout_marginTop="5dp"
+              android:id="@+id/lblItem1" android:gravity="center_vertical"/>
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="15dp"
+              android:layout_marginTop="5dp"
+              android:id="@+id/lblItem2" android:gravity="center_vertical"/>
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="15dp"
+              android:layout_marginTop="5dp"
+              android:id="@+id/lblItem3" android:gravity="center_vertical"/>
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="15dp"
+              android:layout_marginTop="5dp"
+              android:id="@+id/lblItem4" android:gravity="center_vertical"/>
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="15dp"
+              android:layout_marginTop="5dp"
+              android:id="@+id/lblItem5" android:gravity="center_vertical"/>
+
+    <Button android:layout_width="match_parent" android:layout_marginTop="25dp" android:layout_height="wrap_content" android:text="@string/ok"
+            android:layout_marginStart="16dp" android:layout_marginEnd="16dp" android:id="@+id/btnFinish"/>
+
+
+</LinearLayout>

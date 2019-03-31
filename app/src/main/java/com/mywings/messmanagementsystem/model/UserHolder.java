@@ -14,6 +14,8 @@ public class UserHolder {
 
     private int id;
 
+    private Criteria criteria;
+
     public User getUser() {
         return user;
     }
@@ -36,6 +38,14 @@ public class UserHolder {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Criteria getCriteria() {
+        return criteria;
+    }
+
+    public void setCriteria(Criteria criteria) {
+        this.criteria = criteria;
     }
 
 

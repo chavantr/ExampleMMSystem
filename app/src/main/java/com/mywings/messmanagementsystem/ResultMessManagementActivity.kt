@@ -55,7 +55,7 @@ class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, Go
     private val SHOW_ICON_IN_MAP = 49
     private var mGoogleApiClient: GoogleApiClient? = null
     private var mLocationRequest: LocationRequest? = null
-    private var latLng: LatLng = LatLng(18.515665, 73.924090)
+    private var latLng: LatLng = LatLng(18.490625, 73.843489)
     private var locationManager: LocationManager? = null
     private lateinit var cPosition: Marker
     private lateinit var messes: List<Mess>
@@ -99,8 +99,8 @@ class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, Go
 
 
         this.messes = UserHolder.getInstance().messes
-
         mMap = googleMap
+
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -118,27 +118,25 @@ class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, Go
 
 
     private fun setupMap() {
-        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        try {
+            locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        val enabled = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
+            val enabled = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
 
-        if (enabled) {
-            var location = LocationUtil.getBestLastKnownLocation(this)
+            if (enabled) {
+                var location = LocationUtil.getBestLastKnownLocation(this)
 
-            latLng = LatLng(location.latitude, location.longitude)
+                latLng = LatLng(location.latitude, location.longitude)
+            }
+        } catch (e: Exception) {
         }
 
         mMap!!.uiSettings.isMyLocationButtonEnabled = false
-        // mMap!!.uiSettings.isMyLocationButtonEnabled = true
-
         mGoogleApiClient = GoogleApiClient.Builder(this!!)
-
             .addConnectionCallbacks(this)
             .addOnConnectionFailedListener(this)
             .addApi(LocationServices.API)
             .build()
-
-
 
         mLocationRequest = LocationRequest.create()
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -171,11 +169,15 @@ class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, Go
         mMap!!.setOnInfoWindowClickListener(infoClick)
 
 
-        if (null != messes && messes.isNotEmpty())
+        if (messes.isNotEmpty())
             for (i in messes.indices) {
                 val mess = messes[i]
                 val ltLg = LatLng(mess.latitude.toDouble(), mess.longitude.toDouble())
-                mMap!!.addMarker(MarkerOptions().position(ltLg)).snippet =
+                var marker = MarkerOptions().position(ltLg).icon(
+                    BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+                )
+                mMap!!.addMarker(marker)
+                    .snippet =
                     "${mess.name}#${mess.localArea}#${mess.rating}#${mess.foodType}#${mess.messType}#${mess.id}#${mess.latitude}#${mess.longitude}"
             }
     }
@@ -188,12 +190,8 @@ class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, Go
         builder.setTitle("Select").setIcon(
             context.resources.getDrawable(R.mipmap.ic_launcher)
         )
-        builder.setSingleChoiceItems(
-            strPopUpData, 0
-        ) { dialog, which ->
+        builder.setSingleChoiceItems(strPopUpData, 0) { dialog, which ->
             val language = strPopUpData[which]
-
-
             when (language) {
                 "Info" -> {
                     info(it)
@@ -202,8 +200,6 @@ class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, Go
                     showL(it)
                 }
             }
-
-
             dialog.dismiss()
         }
         val dialog = builder.create()
@@ -215,8 +211,6 @@ class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, Go
         override fun getInfoContents(marker: Marker?): View? {
             var view: View? = null
             var values: List<String>
-
-
             try {
                 if (marker!!.tag != 1) {
                     view = layoutInflater.inflate(R.layout.layout_mess_row, null)
@@ -231,12 +225,8 @@ class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, Go
                     view!!.lblRating.visibility = View.VISIBLE
                     view!!.lblFoodType.visibility = View.VISIBLE
                     view!!.lblMessType.visibility = View.VISIBLE
-
-
                     nsource = "Your location"
-
                     ndest = values[0]
-
                 }
             } catch (e: Exception) {
                 view!!.lblName.text = "Your location"

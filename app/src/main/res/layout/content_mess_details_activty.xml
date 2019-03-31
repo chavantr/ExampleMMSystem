@@ -35,8 +35,14 @@
         <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/btnRateScreen"
                 android:text="@string/rate_mess"/>
 
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/btnSubscribeEvent"
+        <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:id="@+id/btnSubscribeEvent"
                 android:text="@string/subscribe"/>
+
+
+        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/btnMenu"
+                android:text="@string/today_s_menu"/>
+
 
     </LinearLayout>
 

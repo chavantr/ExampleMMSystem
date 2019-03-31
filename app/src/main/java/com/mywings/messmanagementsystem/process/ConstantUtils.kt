@@ -14,4 +14,5 @@ object ConstantUtils {
     const val MMS_LIKE = "MMS_Like"
 
     const val UPDATE_PROFILE = "MMS_UpdateProfile"
+    const val GET_MENU = "MMS_GetMenu"
 }

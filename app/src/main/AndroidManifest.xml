@@ -14,8 +14,12 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".ProfileActivity" android:label="@string/title_activity_update_profile"
-                  android:screenOrientation="portrait">
+        <activity android:name=".TodaysMenuActivity">
+        </activity>
+        <activity
+                android:name=".ProfileActivity"
+                android:label="@string/title_activity_update_profile"
+                android:screenOrientation="portrait">
         </activity>
         <activity
                 android:name=".RateActivity"
