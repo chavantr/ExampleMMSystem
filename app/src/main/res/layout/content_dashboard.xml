@@ -10,26 +10,10 @@
         tools:showIn="@layout/app_bar_dashboard"
         tools:context=".DashboardActivity">
 
-    <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
-                                                   android:id="@+id/tilLocalName"
-                                                   android:layout_height="wrap_content" android:layout_marginLeft="16dp"
-                                                   android:layout_marginRight="16dp" android:layout_marginTop="16dp">
-
-
-        <android.support.design.widget.TextInputEditText android:layout_width="match_parent"
-                                                         android:layout_height="wrap_content"
-                                                         android:hint="@string/enter_area_name"
-                                                         android:id="@+id/txtLocalName"/>
-
-
-    </android.support.design.widget.TextInputLayout>
-
-
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/distance"
               android:layout_marginLeft="16dp"
               android:textColor="@color/colorAccent" android:id="@+id/lblL"
               android:layout_marginRight="16dp" android:layout_marginTop="16dp"/>
-
 
     <SeekBar android:layout_width="match_parent"
              android:layout_height="wrap_content"
@@ -102,7 +86,11 @@
              android:layout_marginRight="16dp" android:layout_marginTop="16dp"/>
 
 
-    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp"
+    <RatingBar android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/rate"
+               android:layout_marginTop="16dp" android:layout_gravity="center_horizontal"
+               android:numStars="5" android:stepSize="1" android:max="5"/>
+
+    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal" android:id="@+id/btnSearch" android:text="@string/search"/>
 
 

@@ -19,7 +19,6 @@ import com.mywings.messmanagementsystem.process.GetMessAsync
 import com.mywings.messmanagementsystem.process.OnMessListener
 import com.mywings.messmanagementsystem.process.ProgressDialogUtil
 import kotlinx.android.synthetic.main.activity_dashboard.*
-import kotlinx.android.synthetic.main.activity_registration.*
 import kotlinx.android.synthetic.main.app_bar_dashboard.*
 import kotlinx.android.synthetic.main.content_dashboard.*
 import org.json.JSONObject
@@ -128,16 +127,18 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         val getMessAsync = GetMessAsync()
         var jRequst = JSONObject()
         var jParam = JSONObject()
-        jParam.put("Name", txtLocalName.text)
+        jParam.put("Name", "")
         jParam.put("Distance", skDistance.progress)
         jParam.put("FoodType", getFoodType())
         jParam.put("MessType", getMessType())
         jParam.put("Price", skPrice.progress)
+        jParam.put("Rating", rate.rating)
         jRequst.put("request", jParam)
         var criteria = Criteria()
         criteria.distance = skDistance.progress
         criteria.foodType = getFoodType()
         criteria.messType = getMessType()
+        criteria.rating = rate!!.rating.toDouble()
         UserHolder.getInstance().criteria = criteria
         getMessAsync.setOnMessListener(this, jRequst)
 
@@ -146,8 +147,8 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private fun getFoodType(): String {
         return if (chkVeg.isChecked && chkNonVeg.isChecked) "3"
         else if (chkMix.isChecked) "3"
-        else if (chkMix.isChecked && !chkNonVeg.isChecked && !chkMix.isChecked) "1"
-        else if (!chkMix.isChecked && chkNonVeg.isChecked && chkMix.isChecked) "2"
+        else if (chkVeg.isChecked && !chkNonVeg.isChecked && !chkMix.isChecked) "1"
+        else if (!chkVeg.isChecked && chkNonVeg.isChecked && chkMix.isChecked) "2"
         else ""
     }
 
@@ -166,7 +167,8 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             val intent = Intent(this@DashboardActivity, ResultMessManagementActivity::class.java)
             startActivity(intent)
         } else {
-            Snackbar.make(btnSignUp, "Something went wrong,Please try again.", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(btnSearch, "Your search criteria not matched, please try another", Snackbar.LENGTH_LONG)
+                .show()
         }
 
     }

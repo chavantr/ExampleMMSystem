@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -29,6 +30,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.mywings.messmanagementsystem.binder.MessAdapter
+import com.mywings.messmanagementsystem.model.Criteria
 import com.mywings.messmanagementsystem.model.Mess
 import com.mywings.messmanagementsystem.model.UserHolder
 import com.mywings.messmanagementsystem.process.ProgressDialogUtil
@@ -43,7 +45,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.HashMap
+import java.util.*
 
 class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -76,6 +78,8 @@ class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, Go
 
     private var srclng: Double = 0.0
 
+    private lateinit var criteria: Criteria
+
     private val strPopUpData = arrayOf("Info", "Route")
 
 
@@ -84,6 +88,8 @@ class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, Go
         setContentView(R.layout.activity_result_mess_management)
 
         var frame = activity_place_map as SupportMapFragment
+
+        criteria = UserHolder.getInstance().criteria
 
         frame.getMapAsync(this)
 
@@ -172,13 +178,29 @@ class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, Go
         if (messes.isNotEmpty())
             for (i in messes.indices) {
                 val mess = messes[i]
+
                 val ltLg = LatLng(mess.latitude.toDouble(), mess.longitude.toDouble())
+
+                val location = Location("")
+                location.latitude = ltLg.latitude
+                location.longitude = ltLg.longitude
+
+                val location0 = Location("")
+
+                location0.latitude = srctlat
+                location0.longitude = srclng
+
+                val distance0 = location.distanceTo(location0)
+
                 var marker = MarkerOptions().position(ltLg).icon(
                     BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
                 )
-                mMap!!.addMarker(marker)
-                    .snippet =
-                    "${mess.name}#${mess.localArea}#${mess.rating}#${mess.foodType}#${mess.messType}#${mess.id}#${mess.latitude}#${mess.longitude}"
+
+                if (distance0 <= criteria.distance) {
+                    mMap!!.addMarker(marker)
+                        .snippet =
+                        "${mess.name}#${mess.localArea}#${mess.rating}#${mess.foodType}#${mess.messType}#${mess.id}#${mess.latitude}#${mess.longitude}"
+                }
             }
     }
 
@@ -229,7 +251,7 @@ class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, Go
                     ndest = values[0]
                 }
             } catch (e: Exception) {
-                view!!.lblName.text = "Your location"
+                view!!.lblName.text = getLocation(latLng)
             }
 
             return view;
@@ -240,6 +262,18 @@ class ResultMessManagementActivity : AppCompatActivity(), OnMapReadyCallback, Go
         }
 
     }
+
+
+    private fun getLocation(latLng: LatLng): String {
+
+        var geoCoder = Geocoder(this, Locale.getDefault())
+        var list = geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
+        var address = list[0]
+        return "${address.getAddressLine(0)} ${address.locality}"
+
+        return "Your location"
+    }
+
 
 // IMP
 

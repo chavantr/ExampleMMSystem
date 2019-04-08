@@ -39,4 +39,5 @@
     <string name="enter_comment">Enter comment</string>
     <string name="today_s_menu">Today\'s menu</string>
     <string name="ok">Go back</string>
+    <string name="enter_otp">Enter otp</string>
 </resources>
